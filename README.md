@@ -4,7 +4,7 @@ Repository: [ivanxma/mysql97and26-7-demo](https://github.com/ivanxma/mysql97and2
 
 The web app follows the release and feature flow in [MySQL9.7 and 26.7.pptx](outputs/MySQL9.7%20and%2026.7.pptx), using a consistent Oracle/MySQL visual style. Open it with `node server.js` and visit `http://127.0.0.1:4173`.
 
-The overview separates the two release tracks: MySQL 9.7 LTS (the final sequentially numbered release) and MySQL 26.7 Innovation (the first YY.M.P calendar release). It maps four 9.7 Community pillars—replication and HA, telemetry, JSON Duality DML, and hypergraph optimization—and six 26.7 highlights—CSA, Thread Pool, Group Replication's MYSQL stack default, InnoDB undo truncation, post-quantum TLS, and upgrade readiness. Enterprise masking is presented separately because it needs Enterprise Edition and the policy component.
+The overview separates the two release tracks. MySQL 9.7 is the latest LTS release, a stable release with bug fixes; MySQL 26.7 Innovation is the first YY.M.P calendar release. It maps four 9.7 Community pillars—replication and HA, telemetry, JSON Duality DML, and hypergraph optimization—and six 26.7 highlights—CSA, Thread Pool, Group Replication's MYSQL stack default, InnoDB undo truncation, post-quantum TLS, and upgrade readiness. Enterprise masking is presented separately because it needs Enterprise Edition and the policy component.
 
 Each highlighted feature has a dedicated deep-dive page with context, changes, and step-by-step evaluation guidance. The guided interactive pages are:
 
