@@ -1,0 +1,20 @@
+services:
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.161.0
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./otel-collector.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "4318:4318" # MySQL component sends OTLP/HTTP here
+    depends_on:
+      - lgtm
+
+  lgtm:
+    image: grafana/otel-lgtm:0.34.0
+    ports:
+      - "3000:3000" # Grafana UI
+    volumes:
+      - lgtm-data:/data
+
+volumes:
+  lgtm-data:

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f5f1" />
+    <title>MySQL Innovation Lab · 9.7 &amp; 26.7</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="oracle.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand"><img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" alt="MySQL" /><span class="brand-fallback">MySQL</span></div>
+        <div class="environment">ORACLE · MYSQL INNOVATION LAB</div>
+        <nav class="nav" aria-label="Main navigation">
+          <p class="nav-label">THE RELEASE STORY</p>
+          <button class="nav-item active" data-page="overview"><span class="nav-icon">01</span>Overview</button>
+          <button class="nav-item" data-page="97"><span class="nav-icon">02</span>MySQL 9.7 LTS</button>
+          <button class="nav-item" data-page="26"><span class="nav-icon">03</span>MySQL 26.7<span class="nav-badge">NEW</span></button>
+          <p class="nav-label nav-label-lab">FEATURE DEEP DIVES</p>
+          <button class="nav-item" data-page="csa"><span class="nav-icon">04</span>Change Stream Applier</button>
+          <button class="nav-item" data-page="masking"><span class="nav-icon">05</span>Dynamic masking</button>
+          <button class="nav-item" data-page="duality"><span class="nav-icon">06</span>JSON Duality · 9.7</button>
+          <button class="nav-item" data-page="hypergraph"><span class="nav-icon">07</span>Hypergraph Optimizer</button>
+          <button class="nav-item" data-page="telemetry"><span class="nav-icon">08</span>Telemetry · 9.7</button>
+          <button class="nav-item" data-page="undo"><span class="nav-icon">09</span>Undo truncation</button>
+          <button class="nav-item" data-page="threadpool"><span class="nav-icon">10</span>Thread Pool</button>
+          <button class="nav-item" data-page="demos"><span class="nav-icon">11</span>All features</button>
+        </nav>
+        <div class="side-bottom"><div class="release"><span class="release-coin">9→26</span><div><small>RELEASE MAP</small><strong>9.7 LTS · 26.7 Innovation</strong></div></div><a class="docs-link" href="https://dev.mysql.com/doc/refman/26.7/en/" target="_blank" rel="noopener noreferrer"><span>↗</span><div><strong>MySQL reference</strong><small>Official documentation</small></div></a></div>
+      </aside>
+      <main class="main">
+        <header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Open navigation" aria-expanded="false">☰</button><div class="crumb"><span>MYSQL INNOVATION LAB</span><b>/</b><strong id="crumbTitle">OVERVIEW</strong></div><div class="topbar-track">9.7 LTS <span>→</span> 26.7 INNOVATION</div></header>
+        <section class="content" id="content" aria-live="polite"></section>
+      </main>
+    </div>
+    <script src="masking.js"></script>
+    <script src="csa.js"></script>
+    <script src="deepdives.js"></script>
+    <script src="hypergraph.js"></script>
+    <script src="telemetry_page.js"></script>
+    <script src="telemetry.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
