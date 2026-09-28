@@ -111,10 +111,12 @@ telemetry.trace_enabled       ON</code></pre></div>
 
       <section class="story-section" id="telemetry-demo">
         <div class="section-label">06 · OBSERVE THE RUNNING STACK</div>
-        <h2>Follow each signal into Grafana Explore.</h2>
-        <p class="section-intro">The Compose stack sends Collector output to LGTM's Prometheus, Tempo, and Loki backends. Grafana on <code>127.0.0.1:3000</code> reads those data sources. Choose a recent time range and allow for export and indexing delay.</p>
+        <h2>Open the MySQL dashboard, then inspect each signal.</h2>
+        <p class="section-intro">The Compose stack sends Collector output to LGTM's Prometheus, Tempo, and Loki backends. The <em>MySQL Native OpenTelemetry</em> dashboard on <code>127.0.0.1:3000</code> brings native MySQL metrics, traces, and logs together; Explore lets you inspect each data source directly. Choose a recent time range and allow for export and indexing delay.</p>
         <div class="telemetry-observe-grid"><div><span>METRICS</span><h3>Prometheus</h3><p>Use Explore's metric browser and search for a MySQL metric name. For the synthetic test below, search <code>mysql_telemetry_demo_connections</code>.</p></div><div><span>TRACES</span><h3>Tempo</h3><p>Search recent traces by service. The synthetic test uses <code>service.name = mysql-telemetry-synthetic</code>; a real MySQL export will have its own resource attributes.</p></div><div><span>LOGS</span><h3>Loki</h3><p>Logs appear only if sent to the pipeline. A synthetic test log does not demonstrate MySQL Community log export.</p></div></div>
-        <div class="telemetry-actions"><button class="button-red" data-telemetry-collector-sample>Send synthetic OTLP to Collector ▶</button><a class="telemetry-grafana-link" href="http://127.0.0.1:3000/explore" target="_blank" rel="noopener noreferrer">Open Grafana Explore ↗</a><button class="text-link" data-telemetry-stack-refresh>Check endpoints ↻</button></div>
+        <div class="telemetry-actions"><a class="telemetry-grafana-link" href="http://127.0.0.1:3000/d/mysql-native-otel/mysql-native-opentelemetry" target="_blank" rel="noopener noreferrer">Open MySQL dashboard ↗</a><a class="telemetry-grafana-link" href="http://127.0.0.1:3000/explore" target="_blank" rel="noopener noreferrer">Open Grafana Explore ↗</a><a class="text-link" href="collector/Grafana-dashboard/mysql-native-otel-grafana-dashboard.json" download>Download dashboard JSON ↓</a></div>
+        <p class="caption-note">The dashboard expects native MySQL telemetry. Its panels may show No data until MySQL exports matching series and traces; the synthetic Collector test uses different metric and service names.</p>
+        <div class="telemetry-actions"><button class="button-red" data-telemetry-collector-sample>Send synthetic OTLP to Collector ▶</button><button class="text-link" data-telemetry-stack-refresh>Check endpoints ↻</button></div>
         <p id="telemetry-collector-result" class="caption-note" aria-live="polite">The button sends a fixed, clearly labeled sample through the running Collector. It does not query MySQL.</p>
       </section>
 

@@ -127,6 +127,10 @@ These values verify configured destinations, not delivery. In particular, a logs
 
 ### Observe in Grafana
 
+The [MySQL Native OpenTelemetry dashboard JSON](collector/Grafana-dashboard/mysql-native-otel-grafana-dashboard.json) is included in this repository. On the current local Grafana instance, open [the dashboard](http://127.0.0.1:3000/d/mysql-native-otel/mysql-native-opentelemetry) (UID `mysql-native-otel`). It has nine panels covering MySQL connection and slow-query metrics, metric discovery, recent MySQL traces, and native logs.
+
+For a fresh Grafana instance, use **Dashboards → New → Import**, upload the JSON, and select the Prometheus, Tempo, and Loki data sources provided by LGTM. The Compose stack does not auto-provision this file, so it will not overwrite a dashboard edited in Grafana. The panels expect real MySQL native telemetry and may show **No data** until matching signals arrive. The synthetic Collector test below uses different metric and service names and does not populate the native MySQL panels; the logs panel also requires supported MySQL log export.
+
 Open http://127.0.0.1:3000/explore. Select Prometheus for metrics, Tempo for traces, or Loki for logs. Choose a recent time range and allow a short export/indexing delay. The telemetry page has a **Send synthetic OTLP to Collector** button that sends fixed, labeled data through port 4318. Search Prometheus for mysql_telemetry_demo_connections or Tempo for service.name mysql-telemetry-synthetic. This verifies the Collector-to-LGTM demo path, not a MySQL export. The separate **Import sample to web receiver** button writes only to the Node app's bounded in-memory feed; it does not send data to Grafana.
 
 MySQL Community's logging interface alone does not export logs. MySQL log export requires Enterprise Edition, HeatWave, or a custom logging component. The synthetic log is illustrative. The bundled local MySQL runtime cannot currently start on this host, so no live MySQL export was verified.

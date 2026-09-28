@@ -1,0 +1,113 @@
+{
+  "annotations": {"list": []},
+  "description": "Starter dashboard for MySQL native component_telemetry delivered through OpenTelemetry to Prometheus. Metric availability follows the enabled MySQL meter groups.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "id": 1,
+      "type": "text",
+      "title": "MySQL native OpenTelemetry",
+      "gridPos": {"h": 4, "w": 24, "x": 0, "y": 0},
+      "options": {"mode": "markdown", "content": "This dashboard expects MySQL native `component_telemetry` metrics exported through OTLP. Enable the `mysql.stats`, `mysql.stats.connection`, and InnoDB meter groups in `performance_schema.setup_meters`. Panels show **No data** until MySQL sends telemetry."}
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "title": "Connected threads",
+      "gridPos": {"h": 7, "w": 6, "x": 0, "y": 4},
+      "targets": [{"refId": "A", "expr": "{__name__=~\".*threads_connected(_total)?\"}"}],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "textMode": "auto", "colorMode": "value", "graphMode": "area", "justifyMode": "auto"},
+      "fieldConfig": {"defaults": {"unit": "short", "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "orange", "value": 100}, {"color": "red", "value": 500}]}, "color": {"mode": "thresholds"}}, "overrides": []}
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "title": "Maximum used connections",
+      "gridPos": {"h": 7, "w": 6, "x": 6, "y": 4},
+      "targets": [{"refId": "A", "expr": "{__name__=~\".*max_used_connections(_total)?\"}"}],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "textMode": "auto", "colorMode": "value", "graphMode": "area", "justifyMode": "auto"},
+      "fieldConfig": {"defaults": {"unit": "short", "color": {"mode": "thresholds"}}, "overrides": []}
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "title": "Slow queries (cumulative)",
+      "gridPos": {"h": 7, "w": 6, "x": 12, "y": 4},
+      "targets": [{"refId": "A", "expr": "{__name__=~\".*slow_queries(_total)?\"}"}],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "textMode": "auto", "colorMode": "value", "graphMode": "area", "justifyMode": "auto"},
+      "fieldConfig": {"defaults": {"unit": "short", "color": {"mode": "thresholds"}}, "overrides": []}
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "title": "Active MySQL metric series",
+      "gridPos": {"h": 7, "w": 6, "x": 18, "y": 4},
+      "targets": [{"refId": "A", "expr": "count({__name__=~\"(mysql_)?(threads_connected|max_used_connections|slow_queries).*\"})"}],
+      "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}, "orientation": "auto", "textMode": "auto", "colorMode": "value", "graphMode": "area", "justifyMode": "auto"},
+      "fieldConfig": {"defaults": {"unit": "short", "color": {"mode": "thresholds"}}, "overrides": []}
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "title": "Connections and slow queries",
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 11},
+      "targets": [
+        {"refId": "A", "expr": "{__name__=~\".*threads_connected(_total)?\"}", "legendFormat": "connected threads"},
+        {"refId": "B", "expr": "{__name__=~\".*slow_queries(_total)?\"}", "legendFormat": "slow queries (cumulative)"}
+      ],
+      "fieldConfig": {"defaults": {"unit": "short", "color": {"mode": "palette-classic"}}, "overrides": []},
+      "options": {"tooltip": {"mode": "multi", "sort": "none"}, "legend": {"displayMode": "list", "placement": "bottom", "showLegend": true}}
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "title": "InnoDB and MySQL metrics discovered",
+      "description": "Shows up to 20 native MySQL metric series. Use this to discover the precise metric names emitted by your version and enabled meters.",
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 11},
+      "targets": [{"refId": "A", "expr": "topk(20, {__name__=~\"(mysql_)?(innodb|buffer_pool|threads|queries|questions|connections|slow_queries).*\"})", "legendFormat": "{{__name__}}"}],
+      "fieldConfig": {"defaults": {"unit": "short", "color": {"mode": "palette-classic"}}, "overrides": []},
+      "options": {"tooltip": {"mode": "multi", "sort": "none"}, "legend": {"displayMode": "table", "placement": "bottom", "showLegend": true}}
+    },
+    {
+      "id": 8,
+      "type": "table",
+      "datasource": {"type": "tempo", "uid": "${DS_TEMPO}"},
+      "title": "MySQL traces (latest 20)",
+      "gridPos": {"h": 10, "w": 12, "x": 0, "y": 20},
+      "targets": [{"refId": "A", "queryType": "traceql", "query": "{ resource.service.name = \"mysqld\" }", "limit": 20, "spss": 3, "tableType": "traces"}],
+      "options": {"showHeader": true, "cellHeight": "sm", "footer": {"show": false}}
+    },
+    {
+      "id": 9,
+      "type": "logs",
+      "datasource": {"type": "loki", "uid": "${DS_LOKI}"},
+      "title": "MySQL native logs",
+      "gridPos": {"h": 10, "w": 12, "x": 12, "y": 20},
+      "targets": [{"refId": "A", "expr": "{service_name=~\".*mysql.*\"}"}],
+      "options": {"showTime": true, "wrapLogMessage": true, "prettifyLogMessage": false, "enableLogDetails": true, "dedupStrategy": "none", "sortOrder": "Descending"}
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 41,
+  "tags": ["mysql", "opentelemetry", "native-telemetry"],
+  "templating": {"list": [
+    {"name": "DS_PROMETHEUS", "type": "datasource", "label": "Metrics datasource", "query": "prometheus", "current": {"selected": false, "text": "Prometheus", "value": "Prometheus"}},
+    {"name": "DS_TEMPO", "type": "datasource", "label": "Traces datasource", "query": "tempo", "current": {"selected": false, "text": "Tempo", "value": "Tempo"}},
+    {"name": "DS_LOKI", "type": "datasource", "label": "Logs datasource", "query": "loki", "current": {"selected": false, "text": "Loki", "value": "Loki"}}
+  ]},
+  "time": {"from": "now-1h", "to": "now"},
+  "timezone": "browser",
+  "title": "MySQL Native OpenTelemetry",
+  "uid": "mysql-native-otel",
+  "version": 1
+}
