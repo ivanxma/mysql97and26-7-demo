@@ -4,7 +4,6 @@
 .env
 .env.*
 node_modules/
-outputs/~$*.pptx
-outputs/*.inspect.ndjson
+outputs/
 # Stray draft file with a literal backslash name; keep the numbered scripts.
 scripts/creditcard/\\
